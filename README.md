@@ -3,6 +3,18 @@
 ## Overview
 **KeepCount** is a macOS menu bar application designed to let users effortlessly manage and track multiple counters for various tasks directly from the menu bar. It provides a simple, intuitive interface for counting items like daily tasks, project milestones, or personal habits.
 
+### 1. Adding a Counter
+<img src="Images/KeepCountConfig.jpg" width="360" height="225">
+
+### 2. Examples
+<img src="Images/KeepCountEx1.png" width="360" height="225">
+<img src="Images/KeepCountEx2.png" width="360" height="225">
+
+### 3. Menu
+<img src="Images/KeepCountMenu.png" width="360" height="225">
+
+---
+
 ## Key Features
 - **Multiple Counters:** Users can manage multiple counters simultaneously, each with its unique settings and display.
 - **Count Up/Down:** Each counter can be configured to count upwards or downwards, starting from a user-defined initial value.
