@@ -7,8 +7,6 @@
 - **Multiple Counters:** Users can manage multiple counters simultaneously, each with its unique settings and display.
 - **Count Up/Down:** Each counter can be configured to count upwards or downwards, starting from a user-defined initial value.
 - **Interactive Configuration:** Users can adjust the title, starting value, and counting direction through a user-friendly configuration window.
-- **Visibility and Accessibility:** Designed to ensure clear visibility and accessibility, adapting to macOS light and dark modes.
-- **Dynamic Menu Bar Integration:** Counters are displayed as individual status items in the macOS menu bar, avoiding the notch on newer MacBook Pros.
 
 ## Installation
 1. Download "KeepCount" from the Mac App Store.
@@ -28,7 +26,3 @@
 For support, feature requests, or to report issues, please contact:
 
 - **Email:** nishchaykarle@gmail.com
-
-## Additional Notes
-- Ensure macOS is updated to the latest version for optimal performance and compatibility.
-- The app respects macOS automatic management of menu bar items to ensure the best user experience across various hardware configurations, including those with a notch.
