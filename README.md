@@ -27,8 +27,7 @@
 ## Contact Information
 For support, feature requests, or to report issues, please contact:
 
-- **Email:** support@keepcountapp.com
-- **Website:** [www.keepcountapp.com](http://www.keepcountapp.com)
+- **Email:** nishchaykarle@gmail.com
 
 ## Additional Notes
 - Ensure macOS is updated to the latest version for optimal performance and compatibility.
