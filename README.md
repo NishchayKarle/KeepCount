@@ -7,8 +7,8 @@
 <img src="Images/KeepCountConfig.jpg" width="360" height="225">
 
 ### 2. Examples
-<img src="Images/KeepCountEx1.png" width="360" height="225">
-<img src="Images/KeepCountEx2.png" width="360" height="225">
+<img src="Images/KeepCount-Ex1.png" width="365" height="35">
+<img src="Images/KeepCount-Ex2.png" width="268" height="31">
 
 ### 3. Menu
 <img src="Images/KeepCountMenu.png" width="360" height="225">
