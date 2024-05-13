@@ -16,10 +16,10 @@
 3. Click the menu bar icon for the Counter to add more or reset your counters.
 
 ## Usage
-- **Adding a New Counter:** Click "Add New Tracker" from any counter's menu or start the app to configure a new counter.
 - **Updating Counters:** Click on a counter to increase its count based on its configuration (up or down).
-- **Resetting Counters:** Select "Reset" from a counter's menu to reset its value to the initial configuration.
-- **Closing Counters:** Choose "Close Tracker" from a counter's menu to remove it from the menu bar.
+- **Resetting Counters:** Select "Reset Counter" from a counter's menu to reset its value to the initial configuration.
+- **Closing Counters:** Choose "Close Counter" from a counter's menu to remove it from the menu bar.
+- **Adding a New Counter:** Click "Add New Counter" from any counter's menu or start the app to configure a new counter.
 
 ## Known Issues
 - **Notch Overlap:** In extremely rare cases involving specific macOS configurations and an overcrowded menu bar, new counters might appear behind the notch on MacBook Pros. This behavior is generally managed by macOS and should not occur under typical usage conditions.
