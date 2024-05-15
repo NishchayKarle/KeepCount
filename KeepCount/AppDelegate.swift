@@ -38,9 +38,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItems: [NSStatusItem] = []
     var trackers: [TrackItem] = []
     var configWindowController: TrackerConfigWindowController?
+    var appIsActive: Bool = false
+    var eventMonitor: Any?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        setupMainMenu()
         addNewTrackerAction()
+    }
+
+    func setupMainMenu() {
+        let mainMenu = NSMenu()
+
+        // Application menu
+        let appMenuItem = NSMenuItem()
+        mainMenu.addItem(appMenuItem)
+
+        let appMenu = NSMenu()
+        let quitMenuItem = NSMenuItem(title: "Quit KeepCount", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(quitMenuItem)
+        appMenuItem.submenu = appMenu
+
+        NSApp.mainMenu = mainMenu
+        
+        // Activate the app when the status item is clicked
+        for statusItem in statusItems {
+            if let button = statusItem.button {
+                button.action = #selector(activateApp)
+                button.target = self
+            }
+        }
+    }
+    
+    @objc func activateApp() {
+        NSApp.activate(ignoringOtherApps: false)
     }
 
     @objc func addNewTrackerAction() {
@@ -70,8 +100,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         configWindowController?.completionHandler = { [weak self] title, value, countUp in
             self?.addNewTracker(title: title, value: value, countUp: countUp)
         }
-        configWindowController?.window?.center()
-        configWindowController?.showWindow(nil)
+        if let window = configWindowController?.window {
+            window.level = .floating  // Set the window level to floating to ensure it appears in front
+            configWindowController?.showWindow(nil)
+            window.center()  // Center the window on the screen
+        }
     }
 
     func constructMenu(for item: TrackItem?) -> NSMenu {
@@ -91,6 +124,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func updateCount(_ sender: AnyObject) {
+        activateApp()
         if let button = sender as? NSStatusBarButton,
            let index = statusItems.firstIndex(where: { $0.button === button }),
            index < trackers.count {
@@ -101,6 +135,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func resetItem(_ sender: NSMenuItem) {
+        activateApp()
         if let tracker = sender.representedObject as? TrackItem,
            let index = trackers.firstIndex(where: { $0 === tracker }),
            let button = statusItems[index].button {
@@ -110,18 +145,38 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func closeTracker(_ sender: NSMenuItem) {
+        activateApp()
         if let tracker = sender.representedObject as? TrackItem,
            let index = trackers.firstIndex(where: { $0 === tracker }) {
             trackers.remove(at: index)
             let statusItem = statusItems.remove(at: index)
             NSStatusBar.system.removeStatusItem(statusItem)
+            
+            // Check if all trackers are closed and quit the app if so
+            if allCountersClosed() {
+                quitApp()
+            }
         }
+    }
+    
+    @objc func allCountersClosed() -> Bool {
+        return trackers.isEmpty
+    }
+    
+    @objc func closeConfigWindow() {
+        if allCountersClosed() {
+            quitApp()
+        }
+    }
+    
+    @objc func quitApp() {
+        NSApp.terminate(nil)
     }
 
     func setImage(item: TrackItem) -> NSImage? {
         return createImageFromNumber(label: item.getTitle(), count: item.getCount(), countUp: item.upDown())
     }
-
+    
     func applicationWillTerminate(_ notification: Notification) {
     }
 

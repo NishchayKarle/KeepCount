@@ -51,7 +51,24 @@ class TrackerConfigWindowController: NSWindowController, NSWindowDelegate {
         window.isMovableByWindowBackground = true
         self.init(window: window)
         self.window?.title = "New Counter Configuration"
+        self.window?.delegate = self
         setupUI()
+    }
+
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        if let window = window {
+            window.delegate = self
+        } else {
+//            print("Window is not loaded.")
+        }
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        print("Window will close.")
+        if let appDelegate = NSApp.delegate as? AppDelegate {
+            appDelegate.closeConfigWindow()
+        }
     }
 
     func setupUI() {
