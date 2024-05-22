@@ -34,16 +34,19 @@ class CustomStatusItemView: NSView {
     }
 }
 
+
+
 class TrackerConfigWindowController: NSWindowController, NSWindowDelegate {
     var titleTextField: NSTextField!
     var valueTextField: NSTextField!
     var valueStepper: NSStepper!
     var countUpPopUp: NSPopUpButton!
-    var completionHandler: ((String, Int, Bool) -> Void)?
+    var colorPopUp: NSPopUpButton! // Updated color selection pop-up
+    var completionHandler: ((String, Int, Bool, NSColor) -> Void)?
 
     convenience init() {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 350, height: 230),
+            contentRect: NSRect(x: 0, y: 0, width: 350, height: 270), // Increased height for the new field
             styleMask: [.titled, .closable, .fullSizeContentView],
             backing: .buffered,
             defer: false
@@ -60,12 +63,11 @@ class TrackerConfigWindowController: NSWindowController, NSWindowDelegate {
         if let window = window {
             window.delegate = self
         } else {
-//            print("Window is not loaded.")
+            // print("Window is not loaded.")
         }
     }
 
     func windowWillClose(_ notification: Notification) {
-        print("Window will close.")
         if let appDelegate = NSApp.delegate as? AppDelegate {
             appDelegate.closeConfigWindow()
         }
@@ -76,23 +78,23 @@ class TrackerConfigWindowController: NSWindowController, NSWindowDelegate {
 
         // Label for Title
         let titleLabel = createLabel(with: "Title:")
-        titleLabel.frame = NSRect(x: 20, y: 150, width: 120, height: 20)
+        titleLabel.frame = NSRect(x: 20, y: 190, width: 120, height: 20) // Adjusted Y position
         contentView.addSubview(titleLabel)
 
         // Title TextField
-        titleTextField = createTextField(placeholder: "Enter title", frame: NSRect(x: 150, y: 150, width: 180, height: 20))
+        titleTextField = createTextField(placeholder: "Enter title", frame: NSRect(x: 150, y: 190, width: 180, height: 20)) // Adjusted Y position
         contentView.addSubview(titleTextField)
 
         // Label for Initial Value (Start Count From)
         let valueLabel = createLabel(with: "Start Count From:")
-        valueLabel.frame = NSRect(x: 20, y: 110, width: 120, height: 20)
+        valueLabel.frame = NSRect(x: 20, y: 150, width: 120, height: 20) // Adjusted Y position
         contentView.addSubview(valueLabel)
 
         // Value TextField and Stepper
-        valueTextField = createTextField(placeholder: "0", frame: NSRect(x: 150, y: 110, width: 50, height: 20))
+        valueTextField = createTextField(placeholder: "0", frame: NSRect(x: 150, y: 150, width: 50, height: 20)) // Adjusted Y position
         contentView.addSubview(valueTextField)
 
-        valueStepper = NSStepper(frame: NSRect(x: 210, y: 110, width: 20, height: 20))
+        valueStepper = NSStepper(frame: NSRect(x: 210, y: 150, width: 20, height: 20)) // Adjusted Y position
         valueStepper.minValue = 0
         valueStepper.maxValue = Double(Int.max)
         valueStepper.increment = 1
@@ -104,13 +106,23 @@ class TrackerConfigWindowController: NSWindowController, NSWindowDelegate {
 
         // Label for Count Up
         let countUpLabel = createLabel(with: "Count Up:")
-        countUpLabel.frame = NSRect(x: 20, y: 70, width: 120, height: 20)
+        countUpLabel.frame = NSRect(x: 20, y: 110, width: 120, height: 20) // Adjusted Y position
         contentView.addSubview(countUpLabel)
 
         // Count Up Pop-Up Button
-        countUpPopUp = NSPopUpButton(frame: NSRect(x: 150, y: 70, width: 100, height: 20), pullsDown: false)
+        countUpPopUp = NSPopUpButton(frame: NSRect(x: 150, y: 110, width: 100, height: 20), pullsDown: false) // Adjusted Y position
         countUpPopUp.addItems(withTitles: ["Yes", "No"])
         contentView.addSubview(countUpPopUp)
+
+        // Label for Color Selection
+        let colorLabel = createLabel(with: "Color:")
+        colorLabel.frame = NSRect(x: 20, y: 70, width: 120, height: 20) // New field
+        contentView.addSubview(colorLabel)
+
+        // Color Selection Pop-Up Button
+        colorPopUp = NSPopUpButton(frame: NSRect(x: 150, y: 70, width: 100, height: 20), pullsDown: false) // New field
+        colorPopUp.addItems(withTitles: AppColors.colorNames) // Dynamically add all color names
+        contentView.addSubview(colorPopUp)
 
         // Submit Button (Add)
         let submitButton = NSButton(title: "Add", target: self, action: #selector(submitAction))
@@ -143,7 +155,10 @@ class TrackerConfigWindowController: NSWindowController, NSWindowDelegate {
         let title = titleTextField.stringValue.isEmpty ? "New Counter" : titleTextField.stringValue
         let value = Int(valueTextField.stringValue) ?? 0
         let countUp = countUpPopUp.indexOfSelectedItem == 0  // Yes = 0, No = 1
-        completionHandler?(title, value, countUp)
+        let colorKey = AppColors.colorNames[colorPopUp.indexOfSelectedItem]
+        let color = AppColors.colors[colorKey] ?? .black // Default to black if color is not found
+
+        completionHandler?(title, value, countUp, color)
         self.window?.close()
     }
 

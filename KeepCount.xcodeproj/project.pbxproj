@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2130FEE2BFD5850009883AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2130FED2BFD5850009883AF /* Colors.swift */; };
 		A273D2862BF29FFB009C52AF /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A273D2852BF29FFB009C52AF /* Media.xcassets */; };
 		A28318692BF17FA900665C18 /* TrackItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28318682BF17FA900665C18 /* TrackItem.swift */; };
 		A28318A52BF194DE00665C18 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28318A42BF194DE00665C18 /* ViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A2130FED2BFD5850009883AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A273D2852BF29FFB009C52AF /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		A28318682BF17FA900665C18 /* TrackItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackItem.swift; sourceTree = "<group>"; };
 		A28318A42BF194DE00665C18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				A28318682BF17FA900665C18 /* TrackItem.swift */,
 				A28318A42BF194DE00665C18 /* ViewController.swift */,
 				A273D2852BF29FFB009C52AF /* Media.xcassets */,
+				A2130FED2BFD5850009883AF /* Colors.swift */,
 			);
 			path = KeepCount;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2FA53F52BEEC28200A122CE /* AppDelegate.swift in Sources */,
+				A2130FEE2BFD5850009883AF /* Colors.swift in Sources */,
 				A28318692BF17FA900665C18 /* TrackItem.swift in Sources */,
 				A28318A52BF194DE00665C18 /* ViewController.swift in Sources */,
 				A2FA54202BEEC71300A122CE /* main.swift in Sources */,
@@ -420,7 +424,7 @@
 				CODE_SIGN_ENTITLEMENTS = KeepCount/KeepCount.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = KeepCount/Assets.xcassets;
 				DEVELOPMENT_TEAM = 2J6349YFN8;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -436,7 +440,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = nishchaykarle.KeepCountLite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -453,7 +457,7 @@
 				CODE_SIGN_ENTITLEMENTS = KeepCount/KeepCount.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = KeepCount/Assets.xcassets;
 				DEVELOPMENT_TEAM = 2J6349YFN8;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -469,7 +473,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = nishchaykarle.KeepCountLite;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
