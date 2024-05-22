@@ -1,5 +1,7 @@
 # KeepCount Support Information
 
+**Find it on the Mac App Store [here](https://apps.apple.com/us/app/keep-count-lite/id6502613753?mt=12)**
+
 ## Overview
 **KeepCount** is a macOS menu bar application designed to let users effortlessly manage and track multiple counters for various tasks directly from the menu bar. It provides a simple, intuitive interface for counting items like daily tasks, project milestones, or personal habits.
 
