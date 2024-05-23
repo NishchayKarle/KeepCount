@@ -54,8 +54,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var trackers: [TrackItem] = []
     var configWindowController: TrackerConfigWindowController?
     var mainWindow: NSWindow?
+    var showDockIconMenuItem: NSMenuItem?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        NSApp.setActivationPolicy(.regular)  // Show the app in the dock by default
         setupMainMenu()
         setupMainWindow()
         addNewTrackerAction()
@@ -67,6 +69,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             name: NSWorkspace.activeSpaceDidChangeNotification,
             object: nil
         )
+        
+        // Make app active
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     func setupMainMenu() {
@@ -77,6 +82,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainMenu.addItem(appMenuItem)
 
         let appMenu = NSMenu()
+        showDockIconMenuItem = NSMenuItem(title: "Hide Dock Icon", action: #selector(toggleDockIcon), keyEquivalent: "")
+        appMenu.addItem(showDockIconMenuItem!)
         let quitMenuItem = NSMenuItem(title: "Quit KeepCount", action: #selector(quitApp), keyEquivalent: "q")
         appMenu.addItem(quitMenuItem)
         appMenuItem.submenu = appMenu
@@ -109,7 +116,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.constructMenu(for: newItem) ?? NSMenu()
             }
             button.addSubview(customView)
-            button.action = #selector(updateCount(_:))
+            button.action = #selector(statusItemClicked(_:))
             button.target = self
         }
         statusItems.append(statusItem)
@@ -144,16 +151,40 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Add New Counter", action: #selector(addNewTrackerAction), keyEquivalent: "n"))
         menu.addItem(NSMenuItem.separator())
+        
+        if dockIconOn() {
+            menu.addItem(NSMenuItem(title: "Hide Dock Icon", action: #selector(toggleDockIcon), keyEquivalent: ""))
+        }
+        else {
+            menu.addItem(NSMenuItem(title: "Show Dock Icon", action: #selector(toggleDockIcon), keyEquivalent: ""))
+        }
+        
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q"))
         return menu
     }
+    
+    
+    @objc func togglemakeAppActive() {
+        if dockIconOn() {
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        else {
+            NSApp.hide(nil)
+        }
+    }
 
-    @objc func activateApp() {
-            NSApp.activate(ignoringOtherApps: false)
+    @objc func statusItemClicked(_ sender: AnyObject) {
+        togglemakeAppActive()
+        if let button = sender as? NSStatusBarButton,
+           let index = statusItems.firstIndex(where: { $0.button === button }),
+           index < trackers.count {
+            let tracker = trackers[index]
+            tracker.updateCount()
+            button.image = setImage(item: tracker, color: tracker.getColor())
+        }
     }
 
     @objc func updateCount(_ sender: AnyObject) {
-        activateApp()
         if let button = sender as? NSStatusBarButton,
            let index = statusItems.firstIndex(where: { $0.button === button }),
            index < trackers.count {
@@ -164,7 +195,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc func updateColor(_ sender: AnyObject) {
-        activateApp()
         // Change Color
         if let tracker = sender.representedObject as? TrackItem,
            let index = trackers.firstIndex(where: { $0 === tracker }),
@@ -175,7 +205,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func resetItem(_ sender: NSMenuItem) {
-        activateApp()
         if let tracker = sender.representedObject as? TrackItem,
            let index = trackers.firstIndex(where: { $0 === tracker }),
            let button = statusItems[index].button {
@@ -185,7 +214,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc func closeTracker(_ sender: NSMenuItem) {
-        activateApp()
         if let tracker = sender.representedObject as? TrackItem,
            let index = trackers.firstIndex(where: { $0 === tracker }) {
             trackers.remove(at: index)
@@ -209,6 +237,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    @objc func toggleDockIcon() {
+        if NSApp.activationPolicy() == .regular {
+            NSApp.setActivationPolicy(.accessory)
+            showDockIconMenuItem?.title = "Show Dock Icon"
+        } else {
+            NSApp.setActivationPolicy(.regular)
+            showDockIconMenuItem?.title = "Hide Dock Icon"
+        }
+    }
+    
+    func dockIconOn() -> Bool {
+        if NSApp.activationPolicy() == .regular {
+            return true
+        }
+        return false
+    }
+
     @objc func quitApp() {
         NSApp.terminate(nil)
     }
